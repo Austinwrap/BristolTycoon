@@ -164,7 +164,7 @@
             <li><strong>Bell City Business Boss</strong> - Reach $1,000,000</li>
             <li><strong>Master of Bristol Ventures</strong> - Reach $10,000,000</li>
             <li><strong>The Bristol Baron</strong> - Reach $100,000,000</li>
-            <li><strong>David Haberfield</strong> - Reach $100,000,000,000,000 - You run this town!</li>
+            <li><strong>David Haberfeld</strong> - Reach $100,000,000,000,000 - You run this town!</li>
         </ul>
         <p>Each rank comes with its own unique rewards and challenges, pushing you to expand and automate your empire!</p>
         <h3>Directions:</h3>
