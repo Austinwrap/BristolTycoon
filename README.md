@@ -91,18 +91,29 @@
             color: red;
             margin-top: 30px;
         }
+        .income-breakdown {
+            border: 2px solid #8b4513;
+            padding: 10px;
+            margin-top: 10px;
+            background-color: #f5deb3;
+            border-radius: 10px;
+            max-width: 90%;
+            text-align: left;
+            box-sizing: border-box;
+        }
     </style>
 </head>
 <body>
     <h1>Bristol Business Tycoon</h1>
     <div class="business-status">
+        <p>Income per Second: $<span id="incomePerSecond">0</span></p>
         <p>Cans Collected: <span id="cans">0</span></p>
-        <p>Food Trucks Owned: <span id="smallBusinesses">0</span></p>
+        <p>Food Trucks Owned: <span id="smallBusinesses">0</span> ($<span id="smallBusinessesIncome">0</span> per second)</p>
         <p>Local Shops Owned: <span id="midVentures">0</span></p>
         <p>Landmarks Owned: <span id="highVentures">0</span></p>
-        <p>Restaurants Owned: <span id="restaurants">0</span></p>
-        <p>Gas Stations Owned: <span id="gasStations">0</span></p>
-        <p>Grocery Stores Owned: <span id="groceryStores">0</span></p>
+        <p>Restaurants Owned: <span id="restaurants">0</span> ($<span id="restaurantsIncome">0</span> per second)</p>
+        <p>Gas Stations Owned: <span id="gasStations">0</span> ($<span id="gasStationsIncome">0</span> per second)</p>
+        <p>Grocery Stores Owned: <span id="groceryStores">0</span> ($<span id="groceryStoresIncome">0</span> per second)</p>
         <p class="money-display">Money: $<span id="money">0</span></p>
         <p>Tycoon Rank: <span id="tycoonRank" class="tycoon-rank">Bristol Bottle Collector</span></p>
     </div>
@@ -169,6 +180,7 @@
         let gasStations = 0;
         let gasStationIncome = 0;
         let groceryStores = 0;
+        let groceryStoreIncome = 0;
         let money = 0;
         let tycoonRank = "Bristol Bottle Collector";
 
@@ -254,7 +266,7 @@
                 groceryStores++;
                 money -= costs.groceryStoreCost;
                 costs.groceryStoreCost = Math.floor(costs.groceryStoreCost * 1.15);
-                smallBusinessIncome += 100;
+                groceryStoreIncome += 100;
                 alert('Congratulations! You have just purchased a grocery store: Stop & Shop Bristol!');
                 updateBusinessStatus();
             } else {
@@ -287,7 +299,8 @@
                     if (money >= costs.hireManagerCost) {
                         money -= costs.hireManagerCost;
                         smallBusinesses++;
-                        alert('Store Manager hired! Your business runs more smoothly. Food trucks owned increased.');
+                        smallBusinessIncome += 15;
+                        alert('Store Manager hired! Your business runs more smoothly. Food trucks owned increased, and income per second increased.');
                     } else {
                         alert('Not enough money to hire a store manager!');
                     }
@@ -296,7 +309,8 @@
                     if (money >= costs.investInFoodTruckCost) {
                         money -= costs.investInFoodTruckCost;
                         smallBusinesses++;
-                        alert('Invested in Hidden Cafe Food Truck! Food Trucks owned increased.');
+                        smallBusinessIncome += 25;
+                        alert('Invested in Hidden Cafe Food Truck! Food Trucks owned increased, and income per second increased.');
                     } else {
                         alert('Not enough money to invest in a food truck!');
                     }
@@ -305,7 +319,8 @@
                     if (money >= costs.buyCoffeeShopCost) {
                         money -= costs.buyCoffeeShopCost;
                         restaurants++;
-                        alert('You have bought Pure Foods Coffee Shop! Restaurants owned increased.');
+                        smallBusinessIncome += 35;
+                        alert('You have bought Pure Foods Coffee Shop! Restaurants owned increased, and income per second increased.');
                     } else {
                         alert('Not enough money to buy a coffee shop!');
                     }
@@ -318,11 +333,15 @@
         function updateBusinessStatus() {
             document.getElementById("cans").innerText = cans;
             document.getElementById("smallBusinesses").innerText = smallBusinesses;
+            document.getElementById("smallBusinessesIncome").innerText = (smallBusinesses * 10).toFixed(2);
             document.getElementById("midVentures").innerText = ""; // Placeholder
             document.getElementById("highVentures").innerText = ""; // Placeholder
             document.getElementById("restaurants").innerText = restaurants;
+            document.getElementById("restaurantsIncome").innerText = (restaurants * 50).toFixed(2);
             document.getElementById("gasStations").innerText = gasStations;
+            document.getElementById("gasStationsIncome").innerText = (gasStations * 20).toFixed(2);
             document.getElementById("groceryStores").innerText = groceryStores;
+            document.getElementById("groceryStoresIncome").innerText = (groceryStores * 100).toFixed(2);
             document.getElementById("money").innerText = money.toFixed(2);
             updateTycoonRank();
         }
@@ -352,7 +371,9 @@
 
         // Automate passive income every second
         setInterval(function() {
-            money += (smallBusinessIncome + gasStationIncome);
+            let incomePerSecond = smallBusinessIncome + gasStationIncome + groceryStoreIncome;
+            money += incomePerSecond;
+            document.getElementById("incomePerSecond").innerText = incomePerSecond.toFixed(2);
             updateBusinessStatus();
         }, 1000);
     </script>
