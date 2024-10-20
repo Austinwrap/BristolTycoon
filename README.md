@@ -110,10 +110,10 @@
     <div class="buttons-container">
         <button onclick="collectCans()">🛒 Collect Cans</button>
         <button onclick="sellCans()">💰 Sell Cans</button>
-        <button onclick="investInSmallBusiness()">🚚 Invest in "Kens Grille Food Truck" ($200)</button>
-        <button onclick="buyRestaurant()">🍽️ Buy "Monterrey On Riverside" ($5000)</button>
+        <button onclick="investInSmallBusiness()">🚚 Invest in "Riverside Food Truck" ($200)</button>
+        <button onclick="buyRestaurant()">🍽️ Buy "Waffle House" ($5000)</button>
         <button onclick="buyGasStation()">⛽ Buy "Middle St Mobil Station" ($10000)</button>
-        <button onclick="buyGroceryStore()">🛒 Buy "Price Chopper Bristol" ($20000)</button>
+        <button onclick="buyGroceryStore()">🛒 Buy "Stop & Shop Bristol" ($20000)</button>
     </div>
 
     <select id="upgrade-options" onchange="buyUpgrade()">
@@ -122,12 +122,12 @@
         <option value="flyerDistributor">📄 Become Flyer Distributor ($200)</option>
         <option value="hireManager">👨‍💼 Hire Store Manager ($500)</option>
         <option value="investInFoodTruck">🚚 Invest in "Hidden Cafe" Food Truck ($1500)</option>
-        <option value="buyCoffeeShop">☕ Buy "Aroma Joe's" Coffee Shop ($5000)</option>
-        <option value="openConstruction">🏗️ Open "Broad Builders" Construction ($10000)</option>
-        <option value="buyRealEstate">🏢 Invest in "Price Chopper Plaza" Real Estate ($20000)</option>
+        <option value="buyCoffeeShop">☕ Buy "Pure Foods" Coffee Shop ($5000)</option>
+        <option value="openConstruction">🏗️ Open "Broad Street Builders" Construction ($10000)</option>
+        <option value="buyRealEstate">🏢 Invest in "Price Chopper" Real Estate ($20000)</option>
         <option value="buySportsBar">🍻 Buy "Sportys" Sports Bar ($30000)</option>
-        <option value="expandFranchise">🏪 Expand "GameTime Arcade" Franchise ($50000)</option>
-        <option value="buyLuxuryRestaurant">🥂 Buy "New Hibachi Grille" Luxury Restaurant ($100000)</option>
+        <option value="expandFranchise">🏪 Expand "GameTime Grille" Franchise ($50000)</option>
+        <option value="buyLuxuryRestaurant">🥂 Buy "Cafe Real" Luxury Restaurant ($100000)</option>
         <option value="investInBristolMall">🏬 Invest in "Bristol Mall" ($500000)</option>
         <option value="becomePolitician">👔 Become Local Politician ($1000000)</option>
     </select>
@@ -164,27 +164,45 @@
     <script>
         let cans = 0;
         let smallBusinesses = 0;
-        let midVentures = 0;
-        let highVentures = 0;
+        let smallBusinessIncome = 0;
         let restaurants = 0;
         let gasStations = 0;
+        let gasStationIncome = 0;
         let groceryStores = 0;
         let money = 0;
         let tycoonRank = "Bristol Bottle Collector";
 
-        let smallBusinessCost = 200;
-        let restaurantCost = 5000;
-        let gasStationCost = 10000;
-        let groceryStoreCost = 20000;
+        const costs = {
+            smallBusinessCost: 200,
+            restaurantCost: 5000,
+            gasStationCost: 10000,
+            groceryStoreCost: 20000,
+            betterCartCost: 50,
+            flyerDistributorCost: 200,
+            hireManagerCost: 500,
+            investInFoodTruckCost: 1500,
+            buyCoffeeShopCost: 5000,
+            openConstructionCost: 10000,
+            buyRealEstateCost: 20000,
+            buySportsBarCost: 30000,
+            expandFranchiseCost: 50000,
+            buyLuxuryRestaurantCost: 100000,
+            investInBristolMallCost: 500000,
+            becomePoliticianCost: 1000000
+        };
+
+        // Upgrades effect variables
+        let canCollectionRate = 5;
+        let canValue = 0.05;
 
         function collectCans() {
-            cans += 5;
+            cans += canCollectionRate;
             updateBusinessStatus();
         }
 
         function sellCans() {
             if (cans > 0) {
-                money += cans * 0.05;
+                money += cans * canValue;
                 cans = 0;
                 updateBusinessStatus();
             } else {
@@ -193,11 +211,12 @@
         }
 
         function investInSmallBusiness() {
-            if (money >= smallBusinessCost) {
+            if (money >= costs.smallBusinessCost) {
                 smallBusinesses++;
-                money -= smallBusinessCost;
-                smallBusinessCost = Math.floor(smallBusinessCost * 1.15);
-                alert('Congratulations! You have just invested in a food truck: Riverside Food Truck!');
+                money -= costs.smallBusinessCost;
+                costs.smallBusinessCost = Math.floor(costs.smallBusinessCost * 1.15);
+                smallBusinessIncome += 10;
+                alert('Congratulations! You have just invested in a food truck: Riverside Food Truck! This now generates passive income.');
                 updateBusinessStatus();
             } else {
                 alert("Not enough money to invest in a small business!");
@@ -205,11 +224,12 @@
         }
 
         function buyRestaurant() {
-            if (money >= restaurantCost) {
+            if (money >= costs.restaurantCost) {
                 restaurants++;
-                money -= restaurantCost;
-                restaurantCost = Math.floor(restaurantCost * 1.15);
-                alert('Congratulations! You have just bought a restaurant: Main Street Pint & Plate!');
+                money -= costs.restaurantCost;
+                costs.restaurantCost = Math.floor(costs.restaurantCost * 1.15);
+                smallBusinessIncome += 50;
+                alert('Congratulations! You have just bought a restaurant: Waffle House! This now generates passive income.');
                 updateBusinessStatus();
             } else {
                 alert("Not enough money to buy a restaurant!");
@@ -217,10 +237,11 @@
         }
 
         function buyGasStation() {
-            if (money >= gasStationCost) {
+            if (money >= costs.gasStationCost) {
                 gasStations++;
-                money -= gasStationCost;
-                gasStationCost = Math.floor(gasStationCost * 1.15);
+                money -= costs.gasStationCost;
+                costs.gasStationCost = Math.floor(costs.gasStationCost * 1.15);
+                gasStationIncome += 20;
                 alert('Congratulations! You have just bought a gas station: Middle St Mobil Station!');
                 updateBusinessStatus();
             } else {
@@ -229,10 +250,11 @@
         }
 
         function buyGroceryStore() {
-            if (money >= groceryStoreCost) {
+            if (money >= costs.groceryStoreCost) {
                 groceryStores++;
-                money -= groceryStoreCost;
-                groceryStoreCost = Math.floor(groceryStoreCost * 1.15);
+                money -= costs.groceryStoreCost;
+                costs.groceryStoreCost = Math.floor(costs.groceryStoreCost * 1.15);
+                smallBusinessIncome += 100;
                 alert('Congratulations! You have just purchased a grocery store: Stop & Shop Bristol!');
                 updateBusinessStatus();
             } else {
@@ -244,33 +266,35 @@
             const upgrade = document.getElementById("upgrade-options").value;
             switch(upgrade) {
                 case "cart":
-                    if (money >= 50) {
-                        money -= 50;
-                        cans += 10;
+                    if (money >= costs.betterCartCost) {
+                        money -= costs.betterCartCost;
+                        canCollectionRate += 5;
                         alert('Better Cart purchased! You can now collect more cans.');
                     } else {
                         alert('Not enough money for a better cart!');
                     }
                     break;
                 case "flyerDistributor":
-                    if (money >= 200) {
-                        money -= 200;
-                        alert('You are now a Flyer Distributor. Income slightly increased!');
+                    if (money >= costs.flyerDistributorCost) {
+                        money -= costs.flyerDistributorCost;
+                        canValue += 0.01;
+                        alert('You are now a Flyer Distributor. Income per can slightly increased!');
                     } else {
                         alert('Not enough money to become a Flyer Distributor!');
                     }
                     break;
                 case "hireManager":
-                    if (money >= 500) {
-                        money -= 500;
-                        alert('Store Manager hired! Your business runs more smoothly.');
+                    if (money >= costs.hireManagerCost) {
+                        money -= costs.hireManagerCost;
+                        smallBusinesses++;
+                        alert('Store Manager hired! Your business runs more smoothly. Food trucks owned increased.');
                     } else {
                         alert('Not enough money to hire a store manager!');
                     }
                     break;
                 case "investInFoodTruck":
-                    if (money >= 1500) {
-                        money -= 1500;
+                    if (money >= costs.investInFoodTruckCost) {
+                        money -= costs.investInFoodTruckCost;
                         smallBusinesses++;
                         alert('Invested in Hidden Cafe Food Truck! Food Trucks owned increased.');
                     } else {
@@ -278,8 +302,8 @@
                     }
                     break;
                 case "buyCoffeeShop":
-                    if (money >= 5000) {
-                        money -= 5000;
+                    if (money >= costs.buyCoffeeShopCost) {
+                        money -= costs.buyCoffeeShopCost;
                         restaurants++;
                         alert('You have bought Pure Foods Coffee Shop! Restaurants owned increased.');
                     } else {
@@ -294,8 +318,8 @@
         function updateBusinessStatus() {
             document.getElementById("cans").innerText = cans;
             document.getElementById("smallBusinesses").innerText = smallBusinesses;
-            document.getElementById("midVentures").innerText = midVentures;
-            document.getElementById("highVentures").innerText = highVentures;
+            document.getElementById("midVentures").innerText = ""; // Placeholder
+            document.getElementById("highVentures").innerText = ""; // Placeholder
             document.getElementById("restaurants").innerText = restaurants;
             document.getElementById("gasStations").innerText = gasStations;
             document.getElementById("groceryStores").innerText = groceryStores;
@@ -325,6 +349,12 @@
             }
             document.getElementById("tycoonRank").innerText = tycoonRank;
         }
+
+        // Automate passive income every second
+        setInterval(function() {
+            money += (smallBusinessIncome + gasStationIncome);
+            updateBusinessStatus();
+        }, 1000);
     </script>
 </body>
 </html>
