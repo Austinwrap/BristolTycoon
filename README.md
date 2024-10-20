@@ -164,7 +164,7 @@
             <li><strong>Bell City Business Boss</strong> - Reach $1,000,000</li>
             <li><strong>Master of Bristol Ventures</strong> - Reach $10,000,000</li>
             <li><strong>The Bristol Baron</strong> - Reach $100,000,000</li>
-            <li><strong>David Haberfeld</strong> - Reach $100,000,000,000,000 - You run this town!</li>
+            <li><strong>David Haberfield</strong> - Reach $100,000,000,000,000 - You run this town!</li>
         </ul>
         <p>Each rank comes with its own unique rewards and challenges, pushing you to expand and automate your empire!</p>
         <h3>Directions:</h3>
@@ -323,6 +323,76 @@
                         alert('You have bought Pure Foods Coffee Shop! Restaurants owned increased, and income per second increased.');
                     } else {
                         alert('Not enough money to buy a coffee shop!');
+                    }
+                    break;
+                case "openConstruction":
+                    if (money >= costs.openConstructionCost) {
+                        money -= costs.openConstructionCost;
+                        smallBusinesses++;
+                        smallBusinessIncome += 45;
+                        alert('Opened Broad Street Builders Construction! Small businesses owned increased, and income per second increased.');
+                    } else {
+                        alert('Not enough money to open a construction business!');
+                    }
+                    break;
+                case "buyRealEstate":
+                    if (money >= costs.buyRealEstateCost) {
+                        money -= costs.buyRealEstateCost;
+                        gasStations++;
+                        gasStationIncome += 30;
+                        alert('Invested in Price Chopper Real Estate! Gas stations owned increased, and income per second increased.');
+                    } else {
+                        alert('Not enough money to invest in real estate!');
+                    }
+                    break;
+                case "buySportsBar":
+                    if (money >= costs.buySportsBarCost) {
+                        money -= costs.buySportsBarCost;
+                        restaurants++;
+                        smallBusinessIncome += 60;
+                        alert('Bought Sportys Sports Bar! Restaurants owned increased, and income per second increased.');
+                    } else {
+                        alert('Not enough money to buy a sports bar!');
+                    }
+                    break;
+                case "expandFranchise":
+                    if (money >= costs.expandFranchiseCost) {
+                        money -= costs.expandFranchiseCost;
+                        smallBusinesses++;
+                        smallBusinessIncome += 75;
+                        alert('Expanded GameTime Grille Franchise! Small businesses owned increased, and income per second increased.');
+                    } else {
+                        alert('Not enough money to expand the franchise!');
+                    }
+                    break;
+                case "buyLuxuryRestaurant":
+                    if (money >= costs.buyLuxuryRestaurantCost) {
+                        money -= costs.buyLuxuryRestaurantCost;
+                        restaurants++;
+                        smallBusinessIncome += 100;
+                        alert('Bought Cafe Real Luxury Restaurant! Restaurants owned increased, and income per second increased.');
+                    } else {
+                        alert('Not enough money to buy a luxury restaurant!');
+                    }
+                    break;
+                case "investInBristolMall":
+                    if (money >= costs.investInBristolMallCost) {
+                        money -= costs.investInBristolMallCost;
+                        groceryStores++;
+                        groceryStoreIncome += 150;
+                        alert('Invested in Bristol Mall! Grocery stores owned increased, and income per second increased.');
+                    } else {
+                        alert('Not enough money to invest in Bristol Mall!');
+                    }
+                    break;
+                case "becomePolitician":
+                    if (money >= costs.becomePoliticianCost) {
+                        money -= costs.becomePoliticianCost;
+                        smallBusinesses++;
+                        smallBusinessIncome += 200;
+                        alert('Became Local Politician! Passive income significantly increased.');
+                    } else {
+                        alert('Not enough money to become a politician!');
                     }
                     break;
                 // Add more upgrades as needed
